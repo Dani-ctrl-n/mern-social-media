@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
-app.use(express.josn());
+app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
@@ -31,3 +31,19 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage });
+
+// const PORT = process.env.PORT || 6001;
+// mongoose
+//   .connect(process.env.MONGO_URl)
+//   .then(() => {
+//     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+//   })
+//   .catch((error) => console.log(`${PORT} not connected`));
+
+const PORT = process.env.PORT || 6001;
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+  })
+  .catch((error) => console.log(`${error} did not connect`));
